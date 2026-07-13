@@ -76,8 +76,8 @@ Workflow получает новое письмо из Gmail, извлекает
 
 ## 📂 Files
 
-- workflow.json
-- workflow.png
+- [workflow.json](workflow.json)
+- ![workflow.png](workflow.png)
 - gmail.png
 - telegram.png
 - google-sheets.png
