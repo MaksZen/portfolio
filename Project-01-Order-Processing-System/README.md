@@ -72,7 +72,7 @@ Workflow принимает данные заказа через Webhook, выб
 
 ## 📂 Files
 
-- workflow.json ![Workflow](workflow.png)
+- workflow.json
 - workflow.png
 - README.md
 
