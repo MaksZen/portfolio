@@ -1,0 +1,460 @@
+{
+  "name": "Gmail → Google Sheets → Telegram",
+  "nodes": [
+    {
+      "parameters": {
+        "pollTimes": {
+          "item": [
+            {
+              "mode": "everyMinute"
+            }
+          ]
+        },
+        "simple": false,
+        "filters": {},
+        "options": {}
+      },
+      "type": "n8n-nodes-base.gmailTrigger",
+      "typeVersion": 1.4,
+      "position": [
+        -864,
+        32
+      ],
+      "id": "66ec9b05-c933-4a08-aeee-b53798240d38",
+      "name": "Gmail Trigger",
+      "credentials": {
+        "gmailOAuth2": {
+          "id": "BmX76bOreYgDlF4i",
+          "name": "Gmail account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "74e39b1b-17e2-461e-93ba-4af5f888ced2",
+              "name": "text",
+              "value": "={{ $json.text }}",
+              "type": "string"
+            },
+            {
+              "id": "53d04cc1-d012-45c4-a1cf-7667be7dae72",
+              "name": "date",
+              "value": "={{ $json.date }}",
+              "type": "string"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        -672,
+        32
+      ],
+      "id": "e820ca61-5933-4587-9af2-11873c70d60f",
+      "name": "Edit Fields"
+    },
+    {
+      "parameters": {
+        "jsCode": "const text = $input.first().json.text.replace(/\\n/g, \" \");\n\nfunction extract(start, end) {\n  const regex = new RegExp(\n    start + \"\\\\s*:?\\\\s*(.*?)\\\\s*\" + end,\n    \"i\"\n  );\n\n  const match = text.match(regex);\n\n  return match ? match[1].trim() : \"\";\n}\n\nreturn [{\n  json: {\n    order: extract(\"Номер заказа\", \"Дата заказа\"),\n    date: extract(\"Дата заказа\", \"Имя клиента\"),\n    name: extract(\"Имя клиента\", \"Фамилия\"),\n    surname: extract(\"Фамилия\", \"Телефон\"),\n    phone: extract(\"Телефон\", \"Email\"),\n    email: extract(\"Email\", \"Товар\"),\n    product: extract(\"Товар\", \"Количество\"),\n    quantity: extract(\"Количество\", \"Стоимость\"),\n    price: extract(\"Стоимость\", \"Адрес доставки\"),\n    address: extract(\"Адрес доставки\", \"Комментарий\\\\s*клиента\"),\n    comment: extract(\"Комментарий\\\\s*клиента\", \"Спасибо\")\n  }\n}];"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        -448,
+        32
+      ],
+      "id": "e8cff854-2d73-4a31-aa92-c08da7013e78",
+      "name": "Code in JavaScript"
+    },
+    {
+      "parameters": {
+        "operation": "append",
+        "documentId": {
+          "__rl": true,
+          "value": "1cPuiKFsio0T-PKSsBH7AC06W8pQmZt-nxFhWifmL1Zk",
+          "mode": "list",
+          "cachedResultName": "Новая таблица",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1cPuiKFsio0T-PKSsBH7AC06W8pQmZt-nxFhWifmL1Zk/edit?usp=drivesdk"
+        },
+        "sheetName": {
+          "__rl": true,
+          "value": 1650393482,
+          "mode": "list",
+          "cachedResultName": "Лист3",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1cPuiKFsio0T-PKSsBH7AC06W8pQmZt-nxFhWifmL1Zk/edit#gid=1650393482"
+        },
+        "columns": {
+          "mappingMode": "defineBelow",
+          "value": {
+            "Date": "={{ $('Edit Fields').item.json.date }}",
+            "Sender Name": "={{ $json.name }} {{ $json.surname }}",
+            "Sender Email": "={{ $json.email }}",
+            "Subject": "={{ $json.product }}",
+            "Message": "={{ $json.address }}",
+            "Coment": "={{ $json.comment }}"
+          },
+          "matchingColumns": [
+            "row_number"
+          ],
+          "schema": [
+            {
+              "id": "Date",
+              "displayName": "Date",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "Sender Name",
+              "displayName": "Sender Name",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "Sender Email",
+              "displayName": "Sender Email",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "Subject",
+              "displayName": "Subject",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "Message",
+              "displayName": "Message",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "Coment",
+              "displayName": "Coment",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            }
+          ],
+          "attemptToConvertTypes": false,
+          "convertFieldsToString": false
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.googleSheets",
+      "typeVersion": 4.7,
+      "position": [
+        -208,
+        32
+      ],
+      "id": "bb14599e-1475-4bd5-aa80-0c21a3155070",
+      "name": "Append row in sheet1",
+      "credentials": {
+        "googleSheetsOAuth2Api": {
+          "id": "4w2F9wuuWMx2Xvoi",
+          "name": "Google Sheets account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "chatId": "={{ $json.chat_id }}",
+        "text": "=🛒 НОВЫЙ ЗАКАЗ\n 🆔 {{ $('Append row in sheet1').item.json.Date }}\n\n👤 Клиент:\n    {{ $('Code in JavaScript').item.json.name }}{{ $('Code in JavaScript').item.json.surname }}\n\n📞 Телефон:\n   {{ $('Code in JavaScript').item.json.phone }}\n\n📧 Email:\n   {{ $('Code in JavaScript').item.json.email }}\n\n📦 Товар:\n   {{ $('Code in JavaScript').item.json.product }}\n\n📊 Количество:\n   {{ $('Code in JavaScript').item.json.quantity }}\n\n💰 Стоимость:\n   {{ $('Code in JavaScript').item.json.price }}\n\n📍 Адрес:\n   {{ $('Code in JavaScript').item.json.address }}\n\n💬 Комментарий:\n   {{ $('Code in JavaScript').item.json.comment }}\n\n🕒 Дата:\n   {{ $('Code in JavaScript').item.json.date }}",
+        "additionalFields": {}
+      },
+      "type": "n8n-nodes-base.telegram",
+      "typeVersion": 1.2,
+      "position": [
+        512,
+        32
+      ],
+      "id": "ec39235c-ac8a-4efe-afa4-b82edcc0c3d0",
+      "name": "Send a text message",
+      "webhookId": "3dede89e-426f-4eb8-88de-922eb7c2752e",
+      "retryOnFail": false,
+      "credentials": {
+        "telegramApi": {
+          "id": "SciHrapdFyGQvzaH",
+          "name": "Telegram account"
+        }
+      },
+      "onError": "continueRegularOutput"
+    },
+    {
+      "parameters": {
+        "documentId": {
+          "__rl": true,
+          "value": "1cPuiKFsio0T-PKSsBH7AC06W8pQmZt-nxFhWifmL1Zk",
+          "mode": "list",
+          "cachedResultName": "Новая таблица",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1cPuiKFsio0T-PKSsBH7AC06W8pQmZt-nxFhWifmL1Zk/edit?usp=drivesdk"
+        },
+        "sheetName": {
+          "__rl": true,
+          "value": "gid=0",
+          "mode": "list",
+          "cachedResultName": "Managers",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1cPuiKFsio0T-PKSsBH7AC06W8pQmZt-nxFhWifmL1Zk/edit#gid=0"
+        },
+        "filtersUI": {
+          "values": []
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.googleSheets",
+      "typeVersion": 4.7,
+      "position": [
+        0,
+        32
+      ],
+      "id": "7a8e38b1-f00b-4a1b-9c05-9d5ef263ca25",
+      "name": "Get row(s) in sheet",
+      "credentials": {
+        "googleSheetsOAuth2Api": {
+          "id": "4w2F9wuuWMx2Xvoi",
+          "name": "Google Sheets account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "jsCode": "const managers = $input.all();\n\n// Только активные менеджеры\nconst active = managers.filter(m => m.json.active === true);\n\nif (active.length === 0) {\n    throw new Error(\"Нет активных менеджеров\");\n}\n\n// Если queue пустая - считаем её равной 0\nactive.forEach(m => {\n    m.json.queue = Number(m.json.queue) || 0;\n});\n\n// Сортировка по очереди\nactive.sort((a, b) => a.json.queue - b.json.queue);\n\n// Берем первого (у него минимальная очередь)\nconst selected = active[0];\n\nreturn [{\n    json: {\n        manager: selected.json.manager,\n        chat_id: selected.json.chat_id,\n        row_number: selected.json.row_number,\n\n        queue: selected.json.queue,\n        new_queue: selected.json.queue + 1,\n\n        last_order: new Date().toISOString()\n    }\n}];"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        240,
+        32
+      ],
+      "id": "e5e72690-196e-44c6-b604-7db7f7b0c1b9",
+      "name": "Code in JavaScript1"
+    },
+    {
+      "parameters": {
+        "operation": "update",
+        "documentId": {
+          "__rl": true,
+          "value": "1cPuiKFsio0T-PKSsBH7AC06W8pQmZt-nxFhWifmL1Zk",
+          "mode": "list",
+          "cachedResultName": "Новая таблица",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1cPuiKFsio0T-PKSsBH7AC06W8pQmZt-nxFhWifmL1Zk/edit?usp=drivesdk"
+        },
+        "sheetName": {
+          "__rl": true,
+          "value": "gid=0",
+          "mode": "list",
+          "cachedResultName": "Managers",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1cPuiKFsio0T-PKSsBH7AC06W8pQmZt-nxFhWifmL1Zk/edit#gid=0"
+        },
+        "columns": {
+          "mappingMode": "defineBelow",
+          "value": {
+            "row_number": "={{ $('Code in JavaScript1').item.json.row_number }}",
+            "queue": "={{ $('Code in JavaScript1').item.json.new_queue }}",
+            "last_order": "={{ $('Code in JavaScript1').item.json.last_order }}"
+          },
+          "matchingColumns": [
+            "row_number"
+          ],
+          "schema": [
+            {
+              "id": "manager",
+              "displayName": "manager",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "chat_id",
+              "displayName": "chat_id",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "active",
+              "displayName": "active",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "last_order",
+              "displayName": "last_order",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "queue",
+              "displayName": "queue",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "row_number",
+              "displayName": "row_number",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "number",
+              "canBeUsedToMatch": true,
+              "readOnly": true,
+              "removed": false
+            }
+          ],
+          "attemptToConvertTypes": false,
+          "convertFieldsToString": false
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.googleSheets",
+      "typeVersion": 4.7,
+      "position": [
+        800,
+        32
+      ],
+      "id": "b91b9616-0ff4-4e99-9462-ed70fcbe23e9",
+      "name": "Update row in sheet",
+      "credentials": {
+        "googleSheetsOAuth2Api": {
+          "id": "4w2F9wuuWMx2Xvoi",
+          "name": "Google Sheets account"
+        }
+      }
+    }
+  ],
+  "pinData": {},
+  "connections": {
+    "Gmail Trigger": {
+      "main": [
+        [
+          {
+            "node": "Edit Fields",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Edit Fields": {
+      "main": [
+        [
+          {
+            "node": "Code in JavaScript",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Code in JavaScript": {
+      "main": [
+        [
+          {
+            "node": "Append row in sheet1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Append row in sheet1": {
+      "main": [
+        [
+          {
+            "node": "Get row(s) in sheet",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Get row(s) in sheet": {
+      "main": [
+        [
+          {
+            "node": "Code in JavaScript1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Code in JavaScript1": {
+      "main": [
+        [
+          {
+            "node": "Send a text message",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Send a text message": {
+      "main": [
+        [
+          {
+            "node": "Update row in sheet",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        []
+      ]
+    }
+  },
+  "active": false,
+  "settings": {
+    "executionOrder": "v1",
+    "binaryMode": "separate",
+    "availableInMCP": false
+  },
+  "versionId": "dc386dd9-73a4-4089-b883-acc9ecbf1236",
+  "meta": {
+    "templateCredsSetupCompleted": true,
+    "instanceId": "93d399690b0e75496fa34dd6eaa100ad6b91209c69c6d5f164f0ec225f8d765b"
+  },
+  "nodeGroups": [],
+  "id": "jhy3QIVpbgdCKig2",
+  "tags": []
+}
