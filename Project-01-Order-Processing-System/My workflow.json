@@ -1,0 +1,475 @@
+{
+  "name": "My workflow",
+  "nodes": [
+    {
+      "parameters": {
+        "httpMethod": "POST",
+        "path": "e6be73ee-f7f8-4ee0-a324-e78711dcb995",
+        "responseMode": "responseNode",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.webhook",
+      "typeVersion": 2.1,
+      "position": [
+        -480,
+        -352
+      ],
+      "id": "fc8c68f5-e868-48e9-b0bd-ac63de9d7d73",
+      "name": "Webhook",
+      "webhookId": "e6be73ee-f7f8-4ee0-a324-e78711dcb995"
+    },
+    {
+      "parameters": {
+        "respondWith": "json",
+        "responseBody": "{\n  \"success\": true,\n  \"message\": \"Заказ отправлен!\"\n}",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.respondToWebhook",
+      "typeVersion": 1.5,
+      "position": [
+        976,
+        -464
+      ],
+      "id": "f8a670c9-747f-41dd-bde2-e22356ecced1",
+      "name": "Respond to Webhook"
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "97a25542-00fb-4f21-bd24-43164d2b52c4",
+              "name": "=manager",
+              "value": "Иван",
+              "type": "string"
+            },
+            {
+              "id": "12525f4e-7743-459b-a4af-65e07c0b851e",
+              "name": "telegram_message",
+              "value": "={{\n`📦 Новый заказ\n\n👤 Клиент: ${$json.body.name} ${$json.body.surname}\n📞 Телефон: ${$json.body.phone}\n\n🛒 Товар: ${$json.body.product}\n💰 Цена: ${$json.body.price} грн\n📦 Количество: ${$json.body.quantity}\n\n📍 Адрес: ${$json.body.address}`\n}}",
+              "type": "string"
+            }
+          ]
+        },
+        "includeOtherFields": true,
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        -288,
+        -448
+      ],
+      "id": "6aa6b2e3-9793-484e-ad99-a92cb711f0f1",
+      "name": "Edit Fields2"
+    },
+    {
+      "parameters": {
+        "chatId": "={{$json.chat_id}}",
+        "text": "={{ $('Edit Fields2').item.json.telegram_message }}",
+        "additionalFields": {}
+      },
+      "type": "n8n-nodes-base.telegram",
+      "typeVersion": 1.2,
+      "position": [
+        480,
+        -512
+      ],
+      "id": "3de665b8-c7d0-4d55-b132-f186b1c3cae1",
+      "name": "Send a text message",
+      "webhookId": "ba4826d0-cb8f-4bbf-a73c-9b69bf1c1c71",
+      "credentials": {
+        "telegramApi": {
+          "id": "GNkZtJDa6jAeR8h6",
+          "name": "Telegram account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "operation": "append",
+        "documentId": {
+          "__rl": true,
+          "value": "1cPuiKFsio0T-PKSsBH7AC06W8pQmZt-nxFhWifmL1Zk",
+          "mode": "list",
+          "cachedResultName": "Новая таблица",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1cPuiKFsio0T-PKSsBH7AC06W8pQmZt-nxFhWifmL1Zk/edit?usp=drivesdk"
+        },
+        "sheetName": {
+          "__rl": true,
+          "value": 1686016366,
+          "mode": "list",
+          "cachedResultName": "Orders",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1cPuiKFsio0T-PKSsBH7AC06W8pQmZt-nxFhWifmL1Zk/edit#gid=1686016366"
+        },
+        "columns": {
+          "mappingMode": "defineBelow",
+          "value": {
+            "Дата": "={{ $now.format(`dd.MM.yyyy HH:mm`) }}",
+            "Имя": "={{ $('Edit Fields2').item.json.body.name }}",
+            "Фамилия": "={{ $('Edit Fields2').item.json.body.surname }}",
+            "Телефон": "={{ $('Edit Fields2').item.json.body.phone }}",
+            "Товар": "={{ $('Webhook').item.json.body.product }}",
+            "Цена": "={{ $('Webhook').item.json.body.price }}",
+            "Количество": "={{ $('Edit Fields2').item.json.body.quantity }}",
+            "Адрес": "={{ $('Edit Fields2').item.json.body.address }}",
+            "Менеджер": "={{ $('Update row in sheet').item.json.manager }}"
+          },
+          "matchingColumns": [],
+          "schema": [
+            {
+              "id": "Дата",
+              "displayName": "Дата",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "Имя",
+              "displayName": "Имя",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "Фамилия",
+              "displayName": "Фамилия",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "Телефон",
+              "displayName": "Телефон",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "Товар",
+              "displayName": "Товар",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "Цена",
+              "displayName": "Цена",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "Количество",
+              "displayName": "Количество",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "Адрес",
+              "displayName": "Адрес",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "Менеджер",
+              "displayName": "Менеджер",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            }
+          ],
+          "attemptToConvertTypes": false,
+          "convertFieldsToString": false
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.googleSheets",
+      "typeVersion": 4.7,
+      "position": [
+        688,
+        -624
+      ],
+      "id": "a3621f90-9bc8-4e97-b718-d9085aeb4aab",
+      "name": "Append row in sheet",
+      "credentials": {
+        "googleSheetsOAuth2Api": {
+          "id": "jZPwLTVUWEk1Zf4e",
+          "name": "Google Sheets account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "documentId": {
+          "__rl": true,
+          "value": "1cPuiKFsio0T-PKSsBH7AC06W8pQmZt-nxFhWifmL1Zk",
+          "mode": "list",
+          "cachedResultName": "Новая таблица",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1cPuiKFsio0T-PKSsBH7AC06W8pQmZt-nxFhWifmL1Zk/edit?usp=drivesdk"
+        },
+        "sheetName": {
+          "__rl": true,
+          "value": "gid=0",
+          "mode": "list",
+          "cachedResultName": "Managers",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1cPuiKFsio0T-PKSsBH7AC06W8pQmZt-nxFhWifmL1Zk/edit#gid=0"
+        },
+        "filtersUI": {
+          "values": []
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.googleSheets",
+      "typeVersion": 4.7,
+      "position": [
+        -96,
+        -448
+      ],
+      "id": "1d3088b0-12d9-49f8-9582-b312330ad4b2",
+      "name": "Get row(s) in sheet",
+      "credentials": {
+        "googleSheetsOAuth2Api": {
+          "id": "jZPwLTVUWEk1Zf4e",
+          "name": "Google Sheets account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "jsCode": "// Получаем всех менеджеров\nconst managers = $input.all().map(item => item.json);\n\n// Только активные\nconst activeManagers = managers.filter(m => m.active === true);\n\nif (activeManagers.length === 0) {\n\tthrow new Error(\"Нет активных менеджеров\");\n}\n\n// Сортировка по очереди\nactiveManagers.sort((a, b) => a.queue - b.queue);\n\n// Берем первого\nconst selected = activeManagers[0];\n\n// Сразу увеличиваем очередь\nselected.queue = Number(selected.queue) + 1;\n\n// Обновляем время\nselected.last_order = new Date().toISOString();\n\n// Возвращаем полностью объект\nreturn [{\n\tjson: selected\n}];"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        96,
+        -464
+      ],
+      "id": "5a6c273b-863f-47d3-9277-1c075e44a275",
+      "name": "Code in JavaScript"
+    },
+    {
+      "parameters": {
+        "operation": "update",
+        "documentId": {
+          "__rl": true,
+          "value": "1cPuiKFsio0T-PKSsBH7AC06W8pQmZt-nxFhWifmL1Zk",
+          "mode": "list",
+          "cachedResultName": "Новая таблица",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1cPuiKFsio0T-PKSsBH7AC06W8pQmZt-nxFhWifmL1Zk/edit?usp=drivesdk"
+        },
+        "sheetName": {
+          "__rl": true,
+          "value": "gid=0",
+          "mode": "list",
+          "cachedResultName": "Managers",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1cPuiKFsio0T-PKSsBH7AC06W8pQmZt-nxFhWifmL1Zk/edit#gid=0"
+        },
+        "columns": {
+          "mappingMode": "defineBelow",
+          "value": {
+            "row_number": 0,
+            "last_order": "={{ new Date().toISOString() }}",
+            "queue": "={{ ($json.queue || 0) + 1 }}",
+            "manager": "={{ $json.manager }}",
+            "chat_id": "={{ $json.chat_id }}",
+            "active": "={{ $json.active }}"
+          },
+          "matchingColumns": [
+            "manager"
+          ],
+          "schema": [
+            {
+              "id": "manager",
+              "displayName": "manager",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "chat_id",
+              "displayName": "chat_id",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "active",
+              "displayName": "active",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "last_order",
+              "displayName": "last_order",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "queue",
+              "displayName": "queue",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "row_number",
+              "displayName": "row_number",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "number",
+              "canBeUsedToMatch": true,
+              "readOnly": true,
+              "removed": false
+            }
+          ],
+          "attemptToConvertTypes": false,
+          "convertFieldsToString": false
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.googleSheets",
+      "typeVersion": 4.7,
+      "position": [
+        288,
+        -464
+      ],
+      "id": "c22fd267-4292-4615-ab70-077007f3fb1d",
+      "name": "Update row in sheet",
+      "credentials": {
+        "googleSheetsOAuth2Api": {
+          "id": "jZPwLTVUWEk1Zf4e",
+          "name": "Google Sheets account"
+        }
+      }
+    }
+  ],
+  "pinData": {},
+  "connections": {
+    "Webhook": {
+      "main": [
+        [
+          {
+            "node": "Edit Fields2",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Edit Fields2": {
+      "main": [
+        [
+          {
+            "node": "Get row(s) in sheet",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Send a text message": {
+      "main": [
+        [
+          {
+            "node": "Append row in sheet",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Append row in sheet": {
+      "main": [
+        [
+          {
+            "node": "Respond to Webhook",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Get row(s) in sheet": {
+      "main": [
+        [
+          {
+            "node": "Code in JavaScript",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Code in JavaScript": {
+      "main": [
+        [
+          {
+            "node": "Update row in sheet",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Update row in sheet": {
+      "main": [
+        [
+          {
+            "node": "Send a text message",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "active": false,
+  "settings": {
+    "executionOrder": "v1",
+    "binaryMode": "separate",
+    "availableInMCP": false
+  },
+  "versionId": "eea5100a-8bed-45cb-a848-b48c67adaebf",
+  "meta": {
+    "templateCredsSetupCompleted": true,
+    "instanceId": "50e55667f8918c76230d32d57583e091cfea1838765537981d4b17ac12840df8"
+  },
+  "nodeGroups": [],
+  "id": "ErXcaOSJE0SCgIxQ",
+  "tags": []
+}
