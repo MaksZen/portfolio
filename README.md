@@ -1,38 +1,60 @@
 # AI Automation Portfolio
 
-# 👋 About Me
+---
 
-Привет! Меня зовут Максим.
+## 👋 About Me
 
-Я изучаю AI Automation и создаю автоматизированные системы для бизнеса с использованием современных AI-инструментов, API и no-code/low-code платформ.
+Hi! I'm **Maks**.
 
-Основное направление — автоматизация бизнес-процессов, интеграции сервисов, AI-ассистенты и CRM-системы.
+I'm an **AI Automation Engineer** specializing in business process automation using **AI, APIs and no-code technologies**.
+
+I design and build production-ready automation workflows that integrate AI models, messaging platforms, Google Workspace and external APIs to eliminate repetitive work and improve business efficiency.
+
+My focus is creating practical automation solutions that businesses can immediately use.
 
 ---
 
 # 🚀 Tech Stack
 
+## AI & LLM
+
+- Google Gemini API
+- OpenAI API
+- Claude API
+- AI Agents
+- Prompt Engineering
+- Retrieval-Augmented Generation (RAG)
+- Vector Databases
+- Embeddings
+
+---
+
 ## Automation
 
 - n8n
+- Workflow Automation
+- REST APIs
+- HTTP Requests
 - Webhooks
-- HTTP API
-- REST API
 - JSON
 
-## AI
+---
 
-- OpenAI
-- AI Agents
-- Prompt Engineering
-- AI Automation
+## Google Workspace
+
+- Google Sheets API
+- Gmail API
+- Google Drive API
+
+---
 
 ## Integrations
 
 - Telegram Bot API
-- Gmail API
-- Google Sheets API
-- Google Drive API
+- External APIs
+- AI API Integrations
+
+---
 
 ## Programming
 
@@ -40,70 +62,131 @@
 - Git
 - GitHub
 
+---
+
 ## Infrastructure
 
 - Docker
 - VPS
-- Linux (в процессе)
-- Cloudflare (в процессе)
+- Linux
+- Cloudflare
 
 ---
 
-# 📂 Portfolio Projects
+# 📂 Portfolio
 
-| Status | Project |
-|--------|---------|
-| ✅ | Project 01 — Order Processing System |
-| ✅ | Project 02 — Gmail Order Distribution |
-| ⏳ | Project 03 — Telegram CRM |
-| ⏳ | Project 04 — AI Sales Assistant |
-| ⏳ | Project 05 — Lead Management System |
-| ⏳ | Project 06 — AI Email Automation |
-| ⏳ | Project 07 — CRM Synchronization |
-| ⏳ | Project 08 — Customer Support AI |
+## ✅ Project 01 — Order Processing System
+
+Automated order processing and distribution system built with n8n.
+
+**Key Features**
+
+- Webhook integration
+- Google Sheets
+- Telegram notifications
+- Automatic manager assignment
+- Queue management
+- Business process automation
 
 ---
 
-# 📚 Learning Roadmap
+## ✅ Project 02 — Gmail Order Distribution
 
-## Phase 1
+Email automation workflow for processing incoming orders.
 
-- ✅ n8n
-- ✅ Google Sheets
-- ✅ Gmail
-- ✅ Telegram
-- ✅ JavaScript Basics
-- ✅ Webhooks
+**Key Features**
 
-## Phase 2
+- Gmail integration
+- AI-ready workflow
+- Google Sheets
+- Telegram notifications
+- Automated order processing
 
-- ⏳ HTTP Requests
-- ⏳ OAuth
-- ⏳ APIs
-- ⏳ Error Handling
-- ⏳ Docker Deployment
+---
 
-## Phase 3
+## ✅ Project 03 — Telegram AI Knowledge Base Bot (RAG)
 
-- ⏳ AI Agents
-- ⏳ OpenAI API
-- ⏳ Memory
-- ⏳ RAG
-- ⏳ Vector Databases
+AI-powered Telegram assistant using Google Gemini and Vector Store.
 
-## Phase 4
+**Key Features**
 
-- ⏳ CRM Integrations
-- ⏳ Notion API
-- ⏳ Airtable
-- ⏳ Calendars
-- ⏳ Stripe
-- ⏳ WhatsApp
+- AI Agent
+- Google Gemini
+- Retrieval-Augmented Generation (RAG)
+- Vector Database
+- PDF Knowledge Base
+- Telegram Bot
+- Conversation Memory
+- Embeddings
+- Admin document upload
+- Docker deployment
+
+---
+
+# 💼 Core Expertise
+
+- AI Automation
+- AI Agents
+- Business Process Automation
+- Workflow Design
+- API Integrations
+- Google Workspace Automation
+- Telegram Bots
+- RAG Systems
+- Knowledge Base Development
+- Document Processing
+- Workflow Optimization
+- Docker Deployment
+
+---
+
+# 📈 Portfolio Highlights
+
+✔ Production-ready automation workflows
+
+✔ AI-powered business solutions
+
+✔ Telegram integrations
+
+✔ Google Workspace automation
+
+✔ REST API integrations
+
+✔ AI Agent development
+
+✔ RAG knowledge base implementation
+
+✔ Vector database integration
+
+✔ PDF document processing
+
+✔ Docker deployment
+
+---
+
+# 🎯 Current Focus
+
+- AI Automation
+- AI Agents
+- Business Automation
+- Workflow Engineering
+- API Integrations
+- LLM Applications
+- RAG Systems
+- Process Optimization
 
 ---
 
 # 🎯 Goal
 
-Построить сильное портфолио AI Automation Engineer и выполнять коммерческие проекты по автоматизации бизнеса.
+Build reliable AI automation systems that help businesses automate repetitive tasks, integrate AI into daily operations and improve operational efficiency.
 
-Новые проекты и технологии будут регулярно добавляться.
+---
+
+## 📫 Contact
+
+GitHub
+
+https://github.com/MaksZen
+
+Open to freelance opportunities and AI automation projects.
