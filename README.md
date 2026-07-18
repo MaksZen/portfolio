@@ -2,15 +2,13 @@
 
 ---
 
-## 👋 About Me
+# 👋 About Me
 
-Hi, I'm **Maks** — an **AI Automation Engineer** specializing in AI-powered business process automation.
+Hi, I'm **Maks** — an **AI Automation Engineer** specializing in building AI-powered workflow automation for businesses.
 
-I design and build production-ready automation systems that combine AI models, APIs, messaging platforms and cloud services to automate repetitive business processes and improve operational efficiency.
+I design production-ready automation systems using **n8n**, **AI Agents**, **Google Gemini**, **OpenAI-compatible APIs**, **Telegram**, **Google Workspace**, **Docker**, and **REST APIs**.
 
-My primary stack includes **n8n, AI Agents, Google Gemini, OpenAI-compatible APIs, Telegram, Google Workspace, Docker and REST APIs**.
-
-I focus on creating practical automation solutions that businesses can deploy immediately.
+My goal is to automate repetitive business processes, reduce manual work, and build scalable AI solutions that companies can deploy immediately.
 
 ---
 
@@ -28,10 +26,10 @@ I focus on creating practical automation solutions that businesses can deploy im
 
 ---
 
-## AI & LLM
+## Artificial Intelligence
 
 - Google Gemini API
-- OpenAI API
+- OpenAI-compatible APIs
 - Claude API
 - AI Agents
 - Prompt Engineering
@@ -54,7 +52,6 @@ I focus on creating practical automation solutions that businesses can deploy im
 
 - Telegram Bot API
 - External REST APIs
-- AI API Integrations
 
 ---
 
@@ -81,10 +78,10 @@ I focus on creating practical automation solutions that businesses can deploy im
 
 Production-ready workflow for automatic order processing.
 
-### Features
+### Highlights
 
-- Webhook integration
-- Google Sheets
+- Webhook automation
+- Google Sheets integration
 - Telegram notifications
 - Automatic manager assignment
 - Queue management
@@ -94,12 +91,12 @@ Production-ready workflow for automatic order processing.
 
 ## ✅ Project 02 — Gmail Order Processing System
 
-Workflow for processing customer orders received by email.
+Automated workflow for processing customer orders received by email.
 
-### Features
+### Highlights
 
-- Gmail integration
-- Google Sheets
+- Gmail automation
+- Google Sheets integration
 - Telegram notifications
 - Automatic order processing
 - AI-ready architecture
@@ -108,14 +105,14 @@ Workflow for processing customer orders received by email.
 
 ## ✅ Project 03 — Telegram AI Knowledge Base Bot
 
-AI-powered Telegram assistant with an updatable knowledge base.
+AI-powered Telegram assistant capable of answering questions using a custom knowledge base.
 
-### Features
+### Highlights
 
 - Google Gemini
 - AI Agent
 - Retrieval-Augmented Generation (RAG)
-- Vector Database
+- Vector Store
 - Embeddings
 - Conversation Memory
 - PDF document processing
@@ -129,9 +126,8 @@ AI-powered Telegram assistant with an updatable knowledge base.
 
 Automated YouTube trend monitoring system that discovers viral videos using performance analytics and automatically delivers the best opportunities to Telegram.
 
-### Features
+### Highlights
 
-- Scheduled automation
 - YouTube Data API
 - Multi-niche monitoring
 - Outlier detection
@@ -144,118 +140,71 @@ Automated YouTube trend monitoring system that discovers viral videos using perf
 
 🔗 **Project Folder:** [Project-04-YouTube-Outlier-Finder](Project-04-YouTube-Outlier-Finder)
 
-``workflow.json``
-
-![Workflow](Project-04-YouTube-Outlier-Finder/workflow.png)
-
 ---
 
 # 💼 Core Expertise
 
-- AI Automation
-- Workflow Engineering
+- AI Workflow Automation
 - AI Agents
 - Business Process Automation
 - API Integrations
 - Telegram Automation
 - Google Workspace Automation
-- RAG Systems
+- Retrieval-Augmented Generation (RAG)
 - Knowledge Base Development
-- Document Processing
+- Document Processing Pipelines
 - AI Chatbots
 - Docker Deployment
 
 ---
 
-# 📈 What I Build
+# 🎯 Professional Focus
 
-✔ AI-powered automation systems
+I build automation solutions such as:
 
-✔ Business workflow automation
+- AI Assistants
+- Internal Company Knowledge Bases
+- Customer Support Automation
+- CRM Automation
+- Lead Processing
+- Email Automation
+- Telegram Bots
+- Google Workspace Automation
+- Document Processing Pipelines
+- API Integrations
+- Workflow Monitoring
+- Production-ready n8n Systems
 
-✔ AI Assistants
+---
 
-✔ Telegram Bots
+# 📈 Portfolio Highlights
+
+✔ Production-ready automation workflows
+
+✔ AI-powered business solutions
+
+✔ AI Agents and RAG systems
 
 ✔ Google Workspace integrations
 
+✔ Telegram automation
+
 ✔ REST API integrations
 
-✔ Knowledge Base (RAG) systems
+✔ Docker deployment
 
-✔ Document processing pipelines
+✔ Business workflow automation
 
-✔ Production-ready n8n workflows
+✔ Document processing
 
-✔ Docker deployments
-
----
-
-# 🛠 Technologies
-
-**Automation**
-
-- n8n
-- Webhooks
-- REST APIs
-- HTTP Requests
-- JSON
-
-**Artificial Intelligence**
-
-- Google Gemini
-- OpenAI
-- Claude
-- AI Agents
-- Prompt Engineering
-- RAG
-- Embeddings
-
-**Integrations**
-
-- Telegram
-- Google Sheets
-- Gmail
-- Google Drive
-
-**Programming**
-
-- JavaScript
-- Git
-- GitHub
-
-**Infrastructure**
-
-- Docker
-- VPS
-- Linux
-- Cloudflare
-
----
-
-# 🎯 Professional Focus
-
-I specialize in building automation systems that combine AI with business workflows.
-
-Typical solutions include:
-
-- AI assistants
-- Internal company knowledge bases
-- CRM automation
-- Lead processing
-- Email automation
-- Telegram bots
-- Business process automation
-- API integrations
-- Document processing
-- AI-powered customer support
+✔ Data collection and analytics automation
 
 ---
 
 # 📫 Contact
 
-GitHub
+**GitHub**
 
 https://github.com/MaksZen
 
-Open to freelance opportunities and AI automation projects.
+Open to freelance opportunities, contract work, and AI automation projects.
