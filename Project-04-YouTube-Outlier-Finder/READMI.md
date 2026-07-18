@@ -118,7 +118,7 @@ Potential business applications include:
 
 ## 📁 Files
 
-- workflow.json
+- [workflow.json](workflow.json)
 
 ### Workflow Preview
 
