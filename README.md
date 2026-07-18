@@ -125,6 +125,31 @@ AI-powered Telegram assistant with an updatable knowledge base.
 
 ---
 
+## ✅ Project 04 — YouTube Outlier Finder
+
+Automated YouTube trend monitoring system that discovers viral videos using performance analytics and automatically delivers the best opportunities to Telegram.
+
+### Features
+
+- Scheduled automation
+- YouTube Data API
+- Multi-niche monitoring
+- Outlier detection
+- Views per hour analysis
+- Engagement analytics
+- Duplicate prevention
+- Telegram notifications
+- JavaScript processing
+- Batch API requests
+
+🔗 **Project Folder:** [Project-04-YouTube-Outlier-Finder](Project-04-YouTube-Outlier-Finder)
+
+``workflow.json``
+
+![Workflow](Project-04-YouTube-Outlier-Finder/workflow.png)
+
+---
+
 # 💼 Core Expertise
 
 - AI Automation
