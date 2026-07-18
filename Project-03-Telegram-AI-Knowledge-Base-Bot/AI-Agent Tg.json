@@ -1,0 +1,548 @@
+{
+  "name": "AI-Agent Tg",
+  "nodes": [
+    {
+      "parameters": {
+        "updates": [
+          "message"
+        ],
+        "additionalFields": {}
+      },
+      "type": "n8n-nodes-base.telegramTrigger",
+      "typeVersion": 1.4,
+      "position": [
+        -1408,
+        -544
+      ],
+      "id": "fc49b2b7-aa60-4f0c-96ee-afae3ac85cb6",
+      "name": "Telegram Trigger",
+      "webhookId": "719b7d05-9a83-47c8-b171-4d3599518320",
+      "credentials": {
+        "telegramApi": {
+          "id": "IMu3gYCp2TRyK1ZD",
+          "name": "Telegram account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "chatId": "={{ $('Telegram Trigger').first().json.message.chat.id }}",
+        "text": "={{ $json.output }}",
+        "additionalFields": {
+          "parse_mode": "HTML"
+        }
+      },
+      "type": "n8n-nodes-base.telegram",
+      "typeVersion": 1.2,
+      "position": [
+        -432,
+        -384
+      ],
+      "id": "7e5e9eaa-f819-4a87-886a-cf40f5382aa3",
+      "name": "Send a text message",
+      "webhookId": "59c1ba44-38af-4f9f-8faa-87c7fd29f5df",
+      "credentials": {
+        "telegramApi": {
+          "id": "IMu3gYCp2TRyK1ZD",
+          "name": "Telegram account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "promptType": "define",
+        "text": "={{ $json.message.text }}",
+        "options": {
+          "systemMessage": "Ты — AI-ассистент компании Max Automations.\n\nТвоя задача — отвечать пользователям, используя информацию из базы знаний (Vector Store).\n\nПравила:\n\n- Отвечай только на основе информации, найденной в базе знаний.\n- Если информации в базе нет — честно сообщи об этом. Не выдумывай факты.\n- Отвечай простым, понятным и профессиональным языком.\n- Не используй Markdown-разметку (*, _, #, ```).\n- Не используй HTML.\n- Не используй эмодзи без необходимости.\n- Не используй списки со звездочками (*).\n- Если нужен список — используй обычный текст или нумерацию:\n1.\n2.\n3.\n\nЕсли пользователь спрашивает о компании, услугах, стоимости, сроках, технологиях или процессе работы — сначала ищи ответ в базе знаний.\n\nЕсли вопрос не относится к компании (например \"какая погода\", \"реши пример\", \"напиши стих\"), вежливо сообщи, что ты являешься ассистентом компании Max Automations и отвечаешь только на вопросы, связанные с компанией и её услугами."
+        }
+      },
+      "type": "@n8n/n8n-nodes-langchain.agent",
+      "typeVersion": 3.1,
+      "position": [
+        -800,
+        -384
+      ],
+      "id": "8f88e1d8-e958-432b-9420-12239df314d8",
+      "name": "AI Agent"
+    },
+    {
+      "parameters": {
+        "modelName": "models/gemini-3.1-flash-lite",
+        "options": {
+          "maxOutputTokens": 512,
+          "temperature": 0.3,
+          "topK": 32,
+          "topP": 1
+        }
+      },
+      "type": "@n8n/n8n-nodes-langchain.lmChatGoogleGemini",
+      "typeVersion": 1.1,
+      "position": [
+        -912,
+        -144
+      ],
+      "id": "b4ccdd21-40d5-44fc-8521-1b44ed5b2e34",
+      "name": "Google Gemini Chat Model",
+      "credentials": {
+        "googlePalmApi": {
+          "id": "iqdtfrQCwelvTYCd",
+          "name": "Google Gemini(PaLM) Api account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "sessionIdType": "customKey",
+        "sessionKey": "={{ $json.message.chat.id }}",
+        "contextWindowLength": 20
+      },
+      "type": "@n8n/n8n-nodes-langchain.memoryBufferWindow",
+      "typeVersion": 1.4,
+      "position": [
+        -720,
+        -144
+      ],
+      "id": "f0485a15-f661-4515-9cf5-db5d5361aaae",
+      "name": "Simple Memory"
+    },
+    {
+      "parameters": {
+        "resource": "file",
+        "fileId": "={{ $json.message.document.file_id }}",
+        "additionalFields": {}
+      },
+      "type": "n8n-nodes-base.telegram",
+      "typeVersion": 1.2,
+      "position": [
+        -544,
+        -960
+      ],
+      "id": "1e1e70b2-a842-4c9c-a42a-f0349a1e31d5",
+      "name": "Get a file",
+      "webhookId": "a12308b1-a340-4fdb-9bec-173d35c4706f",
+      "credentials": {
+        "telegramApi": {
+          "id": "IMu3gYCp2TRyK1ZD",
+          "name": "Telegram account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "operation": "pdf",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.extractFromFile",
+      "typeVersion": 1.1,
+      "position": [
+        -336,
+        -960
+      ],
+      "id": "42bc3323-cc57-473d-b9f4-059e95de257d",
+      "name": "Extract from File"
+    },
+    {
+      "parameters": {
+        "chatId": "={{ $('Telegram Trigger').item.json.message.chat.id }}",
+        "text": "⛔ У вас нет прав на загрузку документов.",
+        "additionalFields": {}
+      },
+      "type": "n8n-nodes-base.telegram",
+      "typeVersion": 1.2,
+      "position": [
+        -544,
+        -720
+      ],
+      "id": "3f5ce2ab-5f25-479f-ab18-7b99c7cafeb2",
+      "name": "Send a text message1",
+      "webhookId": "b2fc5a6f-ca5d-4aa4-a410-e187b3bf5673",
+      "credentials": {
+        "telegramApi": {
+          "id": "IMu3gYCp2TRyK1ZD",
+          "name": "Telegram account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "chatId": "={{ $('Telegram Trigger').item.json.message.chat.id }}",
+        "text": "=✅ Документ успешно добавлен.\n\n📄 {{$('Telegram Trigger').item.json.message.document.file_name}}\n\nТеперь AI может использовать информацию из этого документа.",
+        "additionalFields": {}
+      },
+      "type": "n8n-nodes-base.telegram",
+      "typeVersion": 1.2,
+      "position": [
+        432,
+        -960
+      ],
+      "id": "9517eeee-9d98-403e-b221-e21aced6d52f",
+      "name": "Send a text message2",
+      "webhookId": "4e4cbe13-1525-41a1-90f6-2a6e9faca642",
+      "credentials": {
+        "telegramApi": {
+          "id": "IMu3gYCp2TRyK1ZD",
+          "name": "Telegram account"
+        }
+      }
+    },
+    {
+      "parameters": {},
+      "type": "n8n-nodes-base.limit",
+      "typeVersion": 1,
+      "position": [
+        224,
+        -960
+      ],
+      "id": "eaf6f75e-d77a-4506-ba35-3d07df3847d0",
+      "name": "Limit"
+    },
+    {
+      "parameters": {},
+      "type": "@n8n/n8n-nodes-langchain.embeddingsGoogleGemini",
+      "typeVersion": 1,
+      "position": [
+        -144,
+        -720
+      ],
+      "id": "d8702797-7dde-4028-a33e-e3226fbd8b70",
+      "name": "Embeddings Google Gemini1",
+      "credentials": {
+        "googlePalmApi": {
+          "id": "iqdtfrQCwelvTYCd",
+          "name": "Google Gemini(PaLM) Api account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "mode": "insert",
+        "memoryKey": {
+          "__rl": true,
+          "mode": "list",
+          "value": "vector_store_key"
+        }
+      },
+      "type": "@n8n/n8n-nodes-langchain.vectorStoreInMemory",
+      "typeVersion": 1.3,
+      "position": [
+        -112,
+        -960
+      ],
+      "id": "dc4eecdf-7dd8-4c7d-b1dd-3fe711388963",
+      "name": "Simple Vector Store2"
+    },
+    {
+      "parameters": {
+        "options": {
+          "metadata": {
+            "metadataValues": [
+              {
+                "name": "1",
+                "value": "={\n  \"filename\": \"{{$('Telegram Trigger').item.json.message.document.file_name}}\",\n  \"uploadedBy\": \"{{$('Telegram Trigger').item.json.message.from.username}}\",\n  \"chatId\": \"{{$('Telegram Trigger').item.json.message.chat.id}}\"\n}"
+              }
+            ]
+          }
+        }
+      },
+      "type": "@n8n/n8n-nodes-langchain.documentDefaultDataLoader",
+      "typeVersion": 1.1,
+      "position": [
+        16,
+        -720
+      ],
+      "id": "d545c2a9-0924-4476-bd3a-cf68a2d84011",
+      "name": "Default Data Loader1"
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "loose",
+            "version": 3
+          },
+          "conditions": [
+            {
+              "id": "dea662a8-f782-4f52-891b-66372e7012a4",
+              "leftValue": "={{ $json.message.document }}",
+              "rightValue": "",
+              "operator": {
+                "type": "string",
+                "operation": "exists",
+                "singleValue": true
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "looseTypeValidation": true,
+        "options": {}
+      },
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2.3,
+      "position": [
+        -1200,
+        -544
+      ],
+      "id": "e6f1bf99-2bdb-44fb-95ec-84d752d7d1fe",
+      "name": "ДОКУМЕНТ?"
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "loose",
+            "version": 3
+          },
+          "conditions": [
+            {
+              "id": "23e6d3e9-001b-412d-bfb3-70946f75e5ba",
+              "leftValue": "={{ $json.message.from.id }}",
+              "rightValue": "453133629",
+              "operator": {
+                "type": "string",
+                "operation": "contains"
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "looseTypeValidation": true,
+        "options": {}
+      },
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2.3,
+      "position": [
+        -880,
+        -832
+      ],
+      "id": "ae408055-36ad-4239-b57c-9c78aa279c27",
+      "name": "АДМИН ?"
+    },
+    {
+      "parameters": {
+        "mode": "retrieve-as-tool",
+        "toolDescription": "Search the company's knowledge base and return the most relevant documents needed to answer the user's question.",
+        "memoryKey": {
+          "__rl": true,
+          "value": "vector_store_key",
+          "mode": "list",
+          "cachedResultName": "vector_store_key"
+        }
+      },
+      "type": "@n8n/n8n-nodes-langchain.vectorStoreInMemory",
+      "typeVersion": 1.3,
+      "position": [
+        -448,
+        -144
+      ],
+      "id": "54283871-0cbc-4270-86bb-95f3635f1261",
+      "name": "Simple Vector Store"
+    },
+    {
+      "parameters": {},
+      "type": "@n8n/n8n-nodes-langchain.embeddingsGoogleGemini",
+      "typeVersion": 1,
+      "position": [
+        -448,
+        80
+      ],
+      "id": "b8808acb-b7e7-4271-a025-03764ee272a7",
+      "name": "Embeddings Google Gemini",
+      "credentials": {
+        "googlePalmApi": {
+          "id": "iqdtfrQCwelvTYCd",
+          "name": "Google Gemini(PaLM) Api account"
+        }
+      }
+    }
+  ],
+  "pinData": {},
+  "connections": {
+    "Telegram Trigger": {
+      "main": [
+        [
+          {
+            "node": "ДОКУМЕНТ?",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Google Gemini Chat Model": {
+      "ai_languageModel": [
+        [
+          {
+            "node": "AI Agent",
+            "type": "ai_languageModel",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "AI Agent": {
+      "main": [
+        [
+          {
+            "node": "Send a text message",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Simple Memory": {
+      "ai_memory": [
+        [
+          {
+            "node": "AI Agent",
+            "type": "ai_memory",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Get a file": {
+      "main": [
+        [
+          {
+            "node": "Extract from File",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Extract from File": {
+      "main": [
+        [
+          {
+            "node": "Simple Vector Store2",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Limit": {
+      "main": [
+        [
+          {
+            "node": "Send a text message2",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Embeddings Google Gemini1": {
+      "ai_embedding": [
+        [
+          {
+            "node": "Simple Vector Store2",
+            "type": "ai_embedding",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Simple Vector Store2": {
+      "main": [
+        [
+          {
+            "node": "Limit",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Default Data Loader1": {
+      "ai_document": [
+        [
+          {
+            "node": "Simple Vector Store2",
+            "type": "ai_document",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "ДОКУМЕНТ?": {
+      "main": [
+        [
+          {
+            "node": "АДМИН ?",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "AI Agent",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "АДМИН ?": {
+      "main": [
+        [
+          {
+            "node": "Get a file",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Send a text message1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Simple Vector Store": {
+      "ai_tool": [
+        [
+          {
+            "node": "AI Agent",
+            "type": "ai_tool",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Embeddings Google Gemini": {
+      "ai_embedding": [
+        [
+          {
+            "node": "Simple Vector Store",
+            "type": "ai_embedding",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "active": true,
+  "settings": {
+    "executionOrder": "v1",
+    "binaryMode": "separate",
+    "availableInMCP": false
+  },
+  "versionId": "f9071c14-6573-4cef-a3c8-5fcf1a421de0",
+  "meta": {
+    "templateCredsSetupCompleted": true,
+    "instanceId": "93d399690b0e75496fa34dd6eaa100ad6b91209c69c6d5f164f0ec225f8d765b"
+  },
+  "nodeGroups": [],
+  "id": "8EQJ82ihOAjFRN93",
+  "tags": []
+}
