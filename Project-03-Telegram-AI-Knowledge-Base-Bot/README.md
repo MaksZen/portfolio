@@ -86,9 +86,9 @@ Employees can ask questions in Telegram while administrators keep the knowledge 
 
 ## 📁 Files
 
-- workflow.json
+- [workflow.json](workflow.json)
+![Workflow](image.png)
 - README.md
-- workflow.png
 
 ---
 
