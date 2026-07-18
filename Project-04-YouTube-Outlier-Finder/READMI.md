@@ -122,7 +122,7 @@ Potential business applications include:
 
 ### Workflow Preview
 
-![Workflow](workflow.png)
+![Workflow](image.png)
 
 ---
 
